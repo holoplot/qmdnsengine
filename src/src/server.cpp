@@ -50,7 +50,7 @@ ServerPrivate::ServerPrivate(Server *server)
     connect(&ipv4Socket, &QUdpSocket::readyRead, this, &ServerPrivate::onReadyRead);
     connect(&ipv6Socket, &QUdpSocket::readyRead, this, &ServerPrivate::onReadyRead);
 
-    timer.setInterval(60 * 1000);
+    timer.setInterval(5 * 1000);
     timer.setSingleShot(true);
     onTimeout();
 }

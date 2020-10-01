@@ -48,7 +48,7 @@ BrowserPrivate::BrowserPrivate(Browser *browser, AbstractServer *server, const Q
     connect(&queryTimer, &QTimer::timeout, this, &BrowserPrivate::onQueryTimeout);
     connect(&serviceTimer, &QTimer::timeout, this, &BrowserPrivate::onServiceTimeout);
 
-    queryTimer.setInterval(60 * 1000);
+    queryTimer.setInterval(5 * 1000);
     queryTimer.setSingleShot(true);
 
     serviceTimer.setInterval(100);
