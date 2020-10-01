@@ -42,6 +42,20 @@
 
 using namespace QMdnsEngine;
 
+namespace
+{
+    bool isValidInterface(const QNetworkInterface& interface)
+    {
+        const auto flags = interface.flags();
+        const bool isUp = flags.testFlag(QNetworkInterface::IsUp);
+        const bool isRunning = flags.testFlag(QNetworkInterface::IsRunning);
+        const bool canMulticast = flags.testFlag(QNetworkInterface::CanMulticast);
+        const bool isLoopBack = flags.testFlag(QNetworkInterface::IsLoopBack);
+
+        return isUp && isRunning && canMulticast && !isLoopBack;
+    }
+}
+
 ServerPrivate::ServerPrivate(Server *server)
     : QObject(server),
       q(server)
@@ -100,7 +114,7 @@ void ServerPrivate::onTimeout()
     if (ipv4Bound || ipv6Bound) {
         for (auto &interface : QNetworkInterface::allInterfaces())
         {
-            if (interface.flags() & QNetworkInterface::CanMulticast)
+            if (isValidInterface(interface))
             {
                 if (ipv4Bound) {
                     ipv4Socket.joinMulticastGroup(MdnsIpv4Address, interface);
@@ -157,7 +171,7 @@ void Server::sendMessageToAll(const Message &message)
     toPacket(message, packet);
     for (auto &interface : QNetworkInterface::allInterfaces())
     {
-        if (interface.flags() & QNetworkInterface::CanMulticast)
+        if (isValidInterface(interface))
         {
             d->ipv4Socket.setMulticastInterface(interface);
             d->ipv4Socket.writeDatagram(packet, MdnsIpv4Address, MdnsPort);
