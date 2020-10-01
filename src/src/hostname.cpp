@@ -137,7 +137,7 @@ void HostnamePrivate::onMessageReceived(const Message &message)
             }
         }
         if (reply.records().count()) {
-            server->sendMessage(reply);
+            server->sendMessageToAll(reply);
         }
     }
 }
