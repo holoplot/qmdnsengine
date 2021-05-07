@@ -60,7 +60,7 @@ target_include_directories(qmdnsengine PUBLIC
     "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}>"
 )
 
-target_link_libraries(qmdnsengine Qt5::Network)
+target_link_libraries(qmdnsengine Qt6::Network)
 
 install(TARGETS qmdnsengine
     EXPORT        qmdnsengine-export
