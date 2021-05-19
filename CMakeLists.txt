@@ -21,7 +21,7 @@ set(INCLUDE_INSTALL_DIR include CACHE STRING "Header installation directory rela
 set(DOC_INSTALL_DIR share/doc/qmdnsengine CACHE STRING "Documentation installation directory relative to the install prefix")
 set(EXAMPLES_INSTALL_DIR "${LIB_INSTALL_DIR}/qmdnsengine/examples" CACHE STRING "Examples installation directory relative to the install prefix")
 
-find_package(Qt6Network 6.0 REQUIRED)
+find_package(Qt6 6.0 REQUIRED COMPONENTS Network)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -35,13 +35,13 @@ endif()
 
 option(BUILD_EXAMPLES "Build example applications" OFF)
 if(BUILD_EXAMPLES)
-    find_package(Qt6Widgets 6.0)
+    find_package(Qt6 6.0 REQUIRED COMPONENTS Widgets)
     add_subdirectory(examples)
 endif()
 
 option(BUILD_TESTS "Build test suite" OFF)
 if(BUILD_TESTS)
-    find_package(Qt6Test 6.0 REQUIRED)
+    find_package(Qt6T 6.0 REQUIRED COMPONENTS Test)
     enable_testing()
     add_subdirectory(tests)
 endif()
